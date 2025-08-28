@@ -1,23 +1,3 @@
-// import dotenv from "dotenv"
-// import connectDB from "./db/index.js";
-// import { app } from "./app.js";
-
-
-
-// dotenv.config({
-//     path:'./env'
-// })
-
-
-// connectDB()
-// .then (() =>{
-//     app.listen(process.env.PORT || 8000, () =>{
-//         console.log(`Server is running at port: ${process.env.PORT}`);
-//     } )
-// })
-// .catch((err) =>{
-//     console.log("Mongo DB connection Faild !!!",err)
-// })
 
 import express from 'express'
 import dotenv from 'dotenv'
@@ -57,7 +37,13 @@ import requestFormRoutes from './routes/requestFormRoutes.js'
 import contactusFormRoutes from './routes/contactusFormRoutes.js'
 import teamSoftRoutes from './routes/TeamRoutes/teamSoftRoutes.js'
 import paymentRoutes from './routes/paymentRoutes.js'
+import blogRoutes from './routes/BlogRoutes/blogRoutes.js'
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config()
 const app = express()
@@ -65,7 +51,9 @@ const app = express()
 // Middleware
 app.use(cors())
 app.use(express.json())
-app.use('/uploads', express.static('uploads'))
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+
 
 // for frontend connection
 // app.use(cors({
@@ -114,7 +102,7 @@ app.use('/api/request-form',requestFormRoutes);
 app.use('/api/contactus-form',contactusFormRoutes);
 app.use("/api/soft-team-banner",teamSoftRoutes);
 app.use("/api/payment", paymentRoutes);
-
+app.use("/api/blogs",blogRoutes);
 
 
 
